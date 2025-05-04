@@ -10,7 +10,7 @@ const Paths = () => {
 
     return ( 
         <>
-        <BrowserRouter basename="/react-aula5">
+        <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Login />}></Route>
                 {
