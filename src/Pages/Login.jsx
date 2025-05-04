@@ -3,17 +3,32 @@ import { InputText } from 'primereact/inputtext';
 import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
 import { Button } from 'primereact/button';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Context } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
                
-
 const Login = () => {
 
     const [mostrarSenha, setMostrarSenha] = useState(false);
 
+    const {register, handleSubmit} = useForm();
+
+    const { setLogado } = useContext(Context);
+
+    const navigate = useNavigate();
+
+    function logar (dados) {
+        if(dados.email == "isaiaswebnet@gmail.com" && dados.senha == "123456") {
+            setLogado (true);
+            navigate('/home');
+        }
+    }
+
     return ( 
         <>
             <div className='bg-primary-500 h-screen flex align-items-center justify-content-center px-3'>
-                <form className='col-12 md:col-3 surface-0 p-3 border-round-md'>
+                <form onSubmit={handleSubmit(logar)} className='col-12 md:col-3 surface-0 p-3 border-round-md'>
                 <h3 className='text-center mt-0 text-4xl'>Seja bem-vindo</h3>
                     <label 
                         htmlFor="email"
@@ -22,6 +37,7 @@ const Login = () => {
                         id='email'
                         placeholder='email@email.com'
                         className='mb-3 w-full surface-0 text-color'
+                        {...register('email', { required: true })}
                     />
                     <label 
                         htmlFor="senha"
@@ -36,6 +52,7 @@ const Login = () => {
                                 id='senha'
                                 placeholder='******'
                                 className='w-full'
+                                {...register('senha', { required: true })}
                             />
                         </IconField>
                     </div>
